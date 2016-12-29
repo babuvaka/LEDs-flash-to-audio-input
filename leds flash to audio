@@ -1,0 +1,51 @@
+/*
+ Mic is connected to arduino analog pin 2. red green blue leds are connected to digital pins of arduino.
+ before connecting to arduino, use oscilloscope to check the input audio signal level and offset levels. Arduino has scale range of 0-5v 
+ so we need to check offset value and according to that level map analog readings.
+
+ 3,5 ,6 are Pwm pins of arduino.. so can adjust in the range of 8 bit scale..
+ */
+
+
+#define microphonePin A2
+#define Red 3      
+#define Green 5
+#define Blue 6
+int sound;
+int sound1;
+void setup() {
+  // put your setup code here, to run once:
+Serial.begin(9600);
+pinMode(microphonePin, INPUT);
+  pinMode(Red, OUTPUT);
+  pinMode(Green, OUTPUT);
+  pinMode(Blue, OUTPUT);
+}
+
+void loop() {
+  sound= analogRead(microphonePin);
+  
+  Serial.print(sound);
+  Serial.print(" ");
+  if (sound>415)
+  {
+    sound1=map(sound,410,750,140,255);
+    }
+    else if (sound>340 && sound <415)
+    {
+       sound1=map(sound,340,415,0,0);
+      }
+      else if (sound<=340)
+      {
+       sound1=map(sound,0,350,1,139);
+      }
+ 
+  analogWrite(Red,sound1);
+   analogWrite(Green,sound1);
+    analogWrite(Blue,sound1);
+  
+  Serial.println(sound1);
+ 
+  delay(10);
+}
+  
