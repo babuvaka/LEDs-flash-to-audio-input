@@ -1,0 +1,95 @@
+#define microphonePin A2
+#define LED1 3      
+#define LED2 5
+#define LED3 6
+int sound;
+int sound1;
+void setup() {
+  // put your setup code here, to run once:
+Serial.begin(9600);
+pinMode(microphonePin, INPUT);
+  pinMode(LED1, OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3, OUTPUT);
+}
+
+void loop() {
+  sound= analogRead(microphonePin);
+  
+  Serial.print(sound);
+  Serial.print(" ");
+   if (sound>415)
+  {
+    sound1=map(sound,410,750,140,255);
+    }
+    else if (sound>340 && sound <415)
+    {
+       sound1=map(sound,340,415,0,9);
+      }
+      else if (sound<=340)
+      {
+       sound1=map(sound,0,350,10,139);
+      }
+      
+   if(sound1>230)
+        {
+             digitalWrite(LED1,HIGH);   // set the LEDs on
+             digitalWrite(LED2,HIGH);
+             digitalWrite(LED3,HIGH);
+        }  
+        else if((sound1)>190)
+        {
+             digitalWrite(LED1,HIGH);   // set the LED on
+             digitalWrite(LED2,HIGH);
+             digitalWrite(LED3,LOW);
+            
+        }
+        else if(sound1>150)
+        {
+             digitalWrite(LED1,HIGH);   // set the LED on
+             digitalWrite(LED2,LOW);
+             digitalWrite(LED3,HIGH);   // set the LED off
+             
+        }
+         else if(sound1>110)
+        {
+             digitalWrite(LED1,HIGH);   // set the LED on
+             digitalWrite(LED2,LOW);   // set the LED off
+             digitalWrite(LED3,LOW);
+             
+        }
+        
+         else if(sound1>70)
+        {
+             digitalWrite(LED1,LOW);   // set the LED on
+             digitalWrite(LED2,HIGH);   // set the LED off
+             digitalWrite(LED3,HIGH);
+             
+        }
+          else if(sound1>30)
+        {
+             digitalWrite(LED1,LOW);   // set the LED on
+             digitalWrite(LED2,HIGH);   // set the LED off
+             digitalWrite(LED3,LOW);
+             
+        }
+          else if(sound1>10)
+        {
+             digitalWrite(LED1,LOW);   // set the LED on
+             digitalWrite(LED2,LOW);   // set the LED off
+             digitalWrite(LED3,HIGH);
+             
+        }
+         else
+        {
+             digitalWrite(LED1,LOW);   // set the LEDs off
+             digitalWrite(LED2,LOW);
+             digitalWrite(LED3,LOW);
+            
+        }
+
+  Serial.println(sound1);
+ 
+  delay(10);
+}
+  
